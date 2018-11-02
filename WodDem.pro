@@ -1,6 +1,6 @@
 QT += core gui widgets
 
-CONFIG += c++11 console
+CONFIG += c++17 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -30,7 +30,9 @@ SOURCES += main.cpp \
     store/JobStore.cpp \
     store/GenderStore.cpp \
     store/RaceStore.cpp \
-    store/ReligionStore.cpp
+    store/ReligionStore.cpp \
+    store/GeographicalAreaStore.cpp \
+    base/Area.cpp
 
 HEADERS += \
     QPtr.hpp \
@@ -50,7 +52,10 @@ HEADERS += \
     store/JobStore.hpp \
     store/GenderStore.hpp \
     store/RaceStore.hpp \
-    store/ReligionStore.hpp
+    store/ReligionStore.hpp \
+    store/GeographicalAreaStore.hpp \
+    base/Area.hpp \
+    base/GeographicalArea.hpp
 
 DISTFILES += \
     LICENSE.md

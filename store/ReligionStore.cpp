@@ -1,13 +1,13 @@
 #include "ReligionStore.hpp"
 
-pReligionStore ReligionStore::singleton = nullptr;
+sReligionStore ReligionStore::singleton = nullptr;
 
-pReligionStore ReligionStore::getSingleton()
+sReligionStore ReligionStore::getSingleton()
 {
 	if(singleton) return singleton;
 	else
 	{
-		singleton = pReligionStore(new ReligionStore());
+		singleton = sReligionStore(new ReligionStore());
 		return  singleton;
 	}
 }
@@ -15,16 +15,16 @@ ReligionStore::ReligionStore()
 {
 
 }
-pReligion ReligionStore::get(int id)
+sReligion ReligionStore::get(int id)
 {
 	if(id < genders.size()) return genders[id];
 	else return nullptr;
 }
-pReligion ReligionStore::create(const QString& name)
+sReligion ReligionStore::create(const QString& name)
 {
 	int id = genders.size();
 	beginInsertRows(QModelIndex(), id, id);
-	pReligion tmp = pReligion(new Religion(id,name));
+	sReligion tmp = sReligion(new Religion(id,name));
 	genders.push_back(tmp);
 	endInsertRows();
 	return tmp;
@@ -66,7 +66,7 @@ bool ReligionStore::setData(const QModelIndex &index, const QVariant &value, int
 	if(index.row() == genders.size())
 	{
 			beginInsertRows(QModelIndex(), index.row(), index.row());
-			genders.insert(index.row(), pReligion(new Religion(index.row(), value.toString())));
+			genders.insert(index.row(), sReligion(new Religion(index.row(), value.toString())));
 			endInsertRows();
 			return true;
 	}
@@ -83,7 +83,7 @@ bool ReligionStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			genders.insert(row+i,pReligion(new Religion(row+i,QString(row))));
+			genders.insert(row+i,sReligion(new Religion(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -100,7 +100,7 @@ bool ReligionStore::removeRows(int row, int count, const QModelIndex &parent)
 		return true;
 	} else return false;
 }
-const pvReligion& ReligionStore::getReligions() const
+const svReligion& ReligionStore::getReligions() const
 {
 	return genders;
 }

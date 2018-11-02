@@ -7,13 +7,13 @@ DEFINE_CLASS(ReligionStore)
 class ReligionStore : public QAbstractListModel
 {
 private:
-	pvReligion genders;
-	static pReligionStore singleton;
+	svReligion genders;
+	static sReligionStore singleton;
 	ReligionStore();
 public:
-	static pReligionStore getSingleton();
-	pReligion get(int id);
-	pReligion create(const QString& name);
+	static sReligionStore getSingleton();
+	sReligion get(int id);
+	sReligion create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,6 +23,6 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvReligion& getReligions() const;
+	const svReligion& getReligions() const;
 };
 #endif // RELIGIONSTORE_HPP

@@ -1,13 +1,13 @@
 #include "JobStore.hpp"
 
-pJobStore JobStore::singleton = nullptr;
+sJobStore JobStore::singleton = nullptr;
 
-pJobStore JobStore::getSingleton()
+sJobStore JobStore::getSingleton()
 {
 	if(singleton) return singleton;
 	else
 	{
-		singleton = pJobStore(new JobStore());
+		singleton = sJobStore(new JobStore());
 		return  singleton;
 	}
 }
@@ -15,16 +15,16 @@ JobStore::JobStore()
 {
 
 }
-pJob JobStore::get(int id)
+sJob JobStore::get(int id)
 {
 	if(id < jobs.size()) return jobs[id];
 	else return nullptr;
 }
-pJob JobStore::create(const QString& name)
+sJob JobStore::create(const QString& name)
 {
 	int id = jobs.size();
 	beginInsertRows(QModelIndex(), id, id);
-	pJob tmp = pJob(new Job(id,name));
+	sJob tmp = sJob(new Job(id,name));
 	jobs.push_back(tmp);
 	endInsertRows();
 	return tmp;
@@ -66,7 +66,7 @@ bool JobStore::setData(const QModelIndex &index, const QVariant &value, int role
 	if(index.row() == jobs.size())
 	{
 			beginInsertRows(QModelIndex(), index.row(), index.row());
-			jobs.insert(index.row(), pJob(new Job(index.row(), value.toString())));
+			jobs.insert(index.row(), sJob(new Job(index.row(), value.toString())));
 			endInsertRows();
 			return true;
 	}
@@ -83,7 +83,7 @@ bool JobStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			jobs.insert(row+i,pJob(new Job(row+i,QString(row))));
+			jobs.insert(row+i,sJob(new Job(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -100,7 +100,7 @@ bool JobStore::removeRows(int row, int count, const QModelIndex &parent)
 		return true;
 	} else return false;
 }
-const pvJob& JobStore::getJobs() const
+const svJob& JobStore::getJobs() const
 {
 	return jobs;
 }

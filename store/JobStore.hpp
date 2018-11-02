@@ -7,13 +7,13 @@ DEFINE_CLASS(JobStore)
 class JobStore : public QAbstractListModel
 {
 private:
-	pvJob jobs;
-	static pJobStore singleton;
+	svJob jobs;
+	static sJobStore singleton;
 	JobStore();
 public:
-	static pJobStore getSingleton();
-	pJob get(int id);
-	pJob create(const QString& name);
+	static sJobStore getSingleton();
+	sJob get(int id);
+	sJob create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,7 +23,7 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvJob& getJobs() const;
+	const svJob& getJobs() const;
 };
 
 #endif // JOBSTORE_HPP

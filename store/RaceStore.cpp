@@ -1,13 +1,13 @@
 #include "RaceStore.hpp"
 
-pRaceStore RaceStore::singleton = nullptr;
+sRaceStore RaceStore::singleton = nullptr;
 
-pRaceStore RaceStore::getSingleton()
+sRaceStore RaceStore::getSingleton()
 {
 	if(singleton) return singleton;
 	else
 	{
-		singleton = pRaceStore(new RaceStore());
+		singleton = sRaceStore(new RaceStore());
 		return  singleton;
 	}
 }
@@ -15,16 +15,16 @@ RaceStore::RaceStore()
 {
 
 }
-pRace RaceStore::get(int id)
+sRace RaceStore::get(int id)
 {
 	if(id < genders.size()) return genders[id];
 	else return nullptr;
 }
-pRace RaceStore::create(const QString& name)
+sRace RaceStore::create(const QString& name)
 {
 	int id = genders.size();
 	beginInsertRows(QModelIndex(), id, id);
-	pRace tmp = pRace(new Race(id,name));
+	sRace tmp = sRace(new Race(id,name));
 	genders.push_back(tmp);
 	endInsertRows();
 	return tmp;
@@ -66,7 +66,7 @@ bool RaceStore::setData(const QModelIndex &index, const QVariant &value, int rol
 	if(index.row() == genders.size())
 	{
 			beginInsertRows(QModelIndex(), index.row(), index.row());
-			genders.insert(index.row(), pRace(new Race(index.row(), value.toString())));
+			genders.insert(index.row(), sRace(new Race(index.row(), value.toString())));
 			endInsertRows();
 			return true;
 	}
@@ -83,7 +83,7 @@ bool RaceStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			genders.insert(row+i,pRace(new Race(row+i,QString(row))));
+			genders.insert(row+i,sRace(new Race(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -100,7 +100,7 @@ bool RaceStore::removeRows(int row, int count, const QModelIndex &parent)
 		return true;
 	} else return false;
 }
-const pvRace& RaceStore::getRaces() const
+const svRace& RaceStore::getRaces() const
 {
 	return genders;
 }

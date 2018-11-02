@@ -1,13 +1,13 @@
 #include "AgeGroupStore.hpp"
 
-pAgeGroupStore AgeGroupStore::singleton = nullptr;
+sAgeGroupStore AgeGroupStore::singleton = nullptr;
 
-pAgeGroupStore AgeGroupStore::getSingleton()
+sAgeGroupStore AgeGroupStore::getSingleton()
 {
 	if(singleton) return singleton;
 	else
 	{
-		singleton = pAgeGroupStore(new AgeGroupStore());
+		singleton = sAgeGroupStore(new AgeGroupStore());
 		return  singleton;
 	}
 }
@@ -15,16 +15,16 @@ AgeGroupStore::AgeGroupStore()
 {
 
 }
-pAgeGroup AgeGroupStore::get(int id)
+sAgeGroup AgeGroupStore::get(int id)
 {
 	if(id < ageGroups.size()) return ageGroups[id];
 	else return nullptr;
 }
-pAgeGroup AgeGroupStore::create(const QString& name)
+sAgeGroup AgeGroupStore::create(const QString& name)
 {
 	int id = ageGroups.size();
 	beginInsertRows(QModelIndex(), id, id);
-	pAgeGroup tmp = pAgeGroup(new AgeGroup(id,name));
+	sAgeGroup tmp = sAgeGroup(new AgeGroup(id,name));
 	ageGroups.push_back(tmp);
 	endInsertRows();
 	return tmp;
@@ -66,7 +66,7 @@ bool AgeGroupStore::setData(const QModelIndex &index, const QVariant &value, int
 	if(index.row() == ageGroups.size())
 	{
 			beginInsertRows(QModelIndex(), index.row(), index.row());
-			ageGroups.insert(index.row(), pAgeGroup(new AgeGroup(index.row(), value.toString())));
+			ageGroups.insert(index.row(), sAgeGroup(new AgeGroup(index.row(), value.toString())));
 			endInsertRows();
 			return true;
 	}
@@ -83,7 +83,7 @@ bool AgeGroupStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			ageGroups.insert(row+i,pAgeGroup(new AgeGroup(row+i,QString(row))));
+			ageGroups.insert(row+i,sAgeGroup(new AgeGroup(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -101,7 +101,7 @@ bool AgeGroupStore::removeRows(int row, int count, const QModelIndex &parent)
 	} else return false;
 }
 
-const pvAgeGroup& AgeGroupStore::getAgeGroups() const
+const svAgeGroup& AgeGroupStore::getAgeGroups() const
 {
 	return ageGroups;
 }

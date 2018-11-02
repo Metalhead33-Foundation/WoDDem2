@@ -7,13 +7,13 @@ DEFINE_CLASS(AgeGroupStore)
 class AgeGroupStore : public QAbstractListModel
 {
 private:
-	pvAgeGroup ageGroups;
-	static pAgeGroupStore singleton;
+	svAgeGroup ageGroups;
+	static sAgeGroupStore singleton;
 	AgeGroupStore();
 public:
-	static pAgeGroupStore getSingleton();
-	pAgeGroup get(int id);
-	pAgeGroup create(const QString& name);
+	static sAgeGroupStore getSingleton();
+	sAgeGroup get(int id);
+	sAgeGroup create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,7 +23,7 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvAgeGroup& getAgeGroups() const;
+	const svAgeGroup& getAgeGroups() const;
 };
 
 #endif // AGEGROUPSTORE_HPP

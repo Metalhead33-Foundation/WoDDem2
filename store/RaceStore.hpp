@@ -7,13 +7,13 @@ DEFINE_CLASS(RaceStore)
 class RaceStore : public QAbstractListModel
 {
 private:
-	pvRace genders;
-	static pRaceStore singleton;
+	svRace genders;
+	static sRaceStore singleton;
 	RaceStore();
 public:
-	static pRaceStore getSingleton();
-	pRace get(int id);
-	pRace create(const QString& name);
+	static sRaceStore getSingleton();
+	sRace get(int id);
+	sRace create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,6 +23,6 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvRace& getRaces() const;
+	const svRace& getRaces() const;
 };
 #endif // RACESTORE_HPP

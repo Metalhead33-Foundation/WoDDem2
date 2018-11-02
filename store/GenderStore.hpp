@@ -7,13 +7,13 @@ DEFINE_CLASS(GenderStore)
 class GenderStore : public QAbstractListModel
 {
 private:
-	pvGender genders;
-	static pGenderStore singleton;
+	svGender genders;
+	static sGenderStore singleton;
 	GenderStore();
 public:
-	static pGenderStore getSingleton();
-	pGender get(int id);
-	pGender create(const QString& name);
+	static sGenderStore getSingleton();
+	sGender get(int id);
+	sGender create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,7 +23,7 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvGender& getGenders() const;
+	const svGender& getGenders() const;
 };
 
 #endif // GENDERSTORE_HPP

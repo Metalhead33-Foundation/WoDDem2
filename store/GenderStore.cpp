@@ -1,13 +1,13 @@
 #include "GenderStore.hpp"
 
-pGenderStore GenderStore::singleton = nullptr;
+sGenderStore GenderStore::singleton = nullptr;
 
-pGenderStore GenderStore::getSingleton()
+sGenderStore GenderStore::getSingleton()
 {
 	if(singleton) return singleton;
 	else
 	{
-		singleton = pGenderStore(new GenderStore());
+		singleton = sGenderStore(new GenderStore());
 		return  singleton;
 	}
 }
@@ -15,16 +15,16 @@ GenderStore::GenderStore()
 {
 
 }
-pGender GenderStore::get(int id)
+sGender GenderStore::get(int id)
 {
 	if(id < genders.size()) return genders[id];
 	else return nullptr;
 }
-pGender GenderStore::create(const QString& name)
+sGender GenderStore::create(const QString& name)
 {
 	int id = genders.size();
 	beginInsertRows(QModelIndex(), id, id);
-	pGender tmp = pGender(new Gender(id,name));
+	sGender tmp = sGender(new Gender(id,name));
 	genders.push_back(tmp);
 	endInsertRows();
 	return tmp;
@@ -66,7 +66,7 @@ bool GenderStore::setData(const QModelIndex &index, const QVariant &value, int r
 	if(index.row() == genders.size())
 	{
 			beginInsertRows(QModelIndex(), index.row(), index.row());
-			genders.insert(index.row(), pGender(new Gender(index.row(), value.toString())));
+			genders.insert(index.row(), sGender(new Gender(index.row(), value.toString())));
 			endInsertRows();
 			return true;
 	}
@@ -83,7 +83,7 @@ bool GenderStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			genders.insert(row+i,pGender(new Gender(row+i,QString(row))));
+			genders.insert(row+i,sGender(new Gender(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -100,7 +100,7 @@ bool GenderStore::removeRows(int row, int count, const QModelIndex &parent)
 		return true;
 	} else return false;
 }
-const pvGender& GenderStore::getGenders() const
+const svGender& GenderStore::getGenders() const
 {
 	return genders;
 }

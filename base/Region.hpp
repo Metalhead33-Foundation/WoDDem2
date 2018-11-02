@@ -3,18 +3,29 @@
 #include "Country.hpp"
 
 DEFINE_CLASS(Region)
-class Region : public HasId, public HasName
+DEFINE_CLASS(Area)
+class Region : public GeographicalArea, public HasId, public HasName
 {
 protected:
-	pCountry mCountry;
+	sCountry mCountry;
+private:
+	wvArea areas;
 public:
 	Region();
-	Region(int mId, const QString& mName, pCountry mCountry);
+	Region(int mId, const QString& mName, sCountry mCountry);
 	void read(const QJsonObject &json);
 	void write(QJsonObject &json) const;
 
-	pCountry getCountry() const;
-	void setCountry(pCountry newCountry);
+	sCountry getCountry() const;
+	void setCountry(sCountry newCountry);
+	GeographicalAreaType getGeographicalAreaType() const;
+	OptionalInt getRow() const;
+	pGeographicalArea getParent() const;
+	pGeographicalArea getChild(int row) const;
+	OptionalInt getRowCount() const;
+
+	bool addArea(const sArea area);
+	const wvArea& getAreas() const;
 };
 
 #endif // REGION_HPP
