@@ -4,8 +4,8 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	//AgeGroupStore::getSingleton()->create("Children");
-	//AgeGroupStore::getSingleton()->create("Elderly");
+	AgeGroupStore::getSingleton()->create("Children");
+	AgeGroupStore::getSingleton()->create("Elderly");
 	MainWindow win;
 	win.show();
 	return a.exec();

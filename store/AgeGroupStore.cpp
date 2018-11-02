@@ -23,10 +23,11 @@ pAgeGroup AgeGroupStore::get(int id)
 pAgeGroup AgeGroupStore::create(const QString& name)
 {
 	int id = ageGroups.size();
+	beginInsertRows(QModelIndex(), id, id);
 	pAgeGroup tmp = pAgeGroup(new AgeGroup(id,name));
 	ageGroups.push_back(tmp);
+	endInsertRows();
 	return tmp;
-
 }
 void AgeGroupStore::remove(int id)
 {
@@ -39,16 +40,12 @@ int AgeGroupStore::rowCount(const QModelIndex& parent) const
 }
 QVariant AgeGroupStore::data(const QModelIndex &index, int role) const
 {
-	/*if(index.isValid() && index.row() < ageGroups.size()) return QVariant(ageGroups[index.row()]->getName());
-	else if(role == Qt::DisplayRole && index.row() == ageGroups.size()) return QVariant(QString("<create>"));
-	else if(role == Qt::EditRole) return QVariant(QString(""));
-	else return QVariant();*/
-	if((role == Qt::DisplayRole || role == Qt::EditRole) && index.row() == ageGroups.size()) return QVariant(QString("<create>"));
-	if(index.row() < 0 || index.row() > ageGroups.size())
-		return QVariant();
-	auto a = ageGroups[index.row()];
-	if(!a) return QVariant();
-	else return ageGroups[index.row()]->getName();
+	if(index.row() < 0 || index.row() > ageGroups.size()) return QVariant();
+	if(role == Qt::DisplayRole || role == Qt::EditRole) {
+	if(index.row() == ageGroups.size()) return QVariant(QString("<create new>"));
+	else if(ageGroups[index.row()]) return QVariant(ageGroups[index.row()]->getName());
+	else return QVariant();
+	} else return QVariant();
 }
 Qt::ItemFlags AgeGroupStore::flags(const QModelIndex &index) const
 {
