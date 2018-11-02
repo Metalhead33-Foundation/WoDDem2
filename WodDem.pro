@@ -44,7 +44,8 @@ HEADERS += \
     store/AgeGroupStore.hpp \
     gui/MainWindow.hpp
 
-DISTFILES +=
+DISTFILES += \
+    LICENSE.md
 
 FORMS += \
     gui/MainWindow.ui
