@@ -1,19 +1,19 @@
-#ifndef AGEGROUPSTORE_HPP
-#define AGEGROUPSTORE_HPP
-#include "../base/AgeGroup.hpp"
+#ifndef RACESTORE_HPP
+#define RACESTORE_HPP
+#include "../base/Race.hpp"
 #include <QAbstractListModel>
 
-DEFINE_CLASS(AgeGroupStore)
-class AgeGroupStore : public QAbstractListModel
+DEFINE_CLASS(RaceStore)
+class RaceStore : public QAbstractListModel
 {
 private:
-	pvAgeGroup ageGroups;
-	static pAgeGroupStore singleton;
-	AgeGroupStore();
+	pvRace genders;
+	static pRaceStore singleton;
+	RaceStore();
 public:
-	static pAgeGroupStore getSingleton();
-	pAgeGroup get(int id);
-	pAgeGroup create(const QString& name);
+	static pRaceStore getSingleton();
+	pRace get(int id);
+	pRace create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,7 +23,6 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvAgeGroup& getAgeGroups() const;
+	const pvRace& getRaces() const;
 };
-
-#endif // AGEGROUPSTORE_HPP
+#endif // RACESTORE_HPP

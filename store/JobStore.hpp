@@ -1,19 +1,19 @@
-#ifndef AGEGROUPSTORE_HPP
-#define AGEGROUPSTORE_HPP
-#include "../base/AgeGroup.hpp"
+#ifndef JOBSTORE_HPP
+#define JOBSTORE_HPP
+#include "../base/Job.hpp"
 #include <QAbstractListModel>
 
-DEFINE_CLASS(AgeGroupStore)
-class AgeGroupStore : public QAbstractListModel
+DEFINE_CLASS(JobStore)
+class JobStore : public QAbstractListModel
 {
 private:
-	pvAgeGroup ageGroups;
-	static pAgeGroupStore singleton;
-	AgeGroupStore();
+	pvJob jobs;
+	static pJobStore singleton;
+	JobStore();
 public:
-	static pAgeGroupStore getSingleton();
-	pAgeGroup get(int id);
-	pAgeGroup create(const QString& name);
+	static pJobStore getSingleton();
+	pJob get(int id);
+	pJob create(const QString& name);
 	void remove(int id);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -23,7 +23,7 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
-	const pvAgeGroup& getAgeGroups() const;
+	const pvJob& getJobs() const;
 };
 
-#endif // AGEGROUPSTORE_HPP
+#endif // JOBSTORE_HPP

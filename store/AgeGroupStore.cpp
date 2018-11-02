@@ -40,12 +40,20 @@ int AgeGroupStore::rowCount(const QModelIndex& parent) const
 }
 QVariant AgeGroupStore::data(const QModelIndex &index, int role) const
 {
-	if(index.row() < 0 || index.row() > ageGroups.size()) return QVariant();
-	if(role == Qt::DisplayRole || role == Qt::EditRole) {
-	if(index.row() == ageGroups.size()) return QVariant(QString("<create new>"));
-	else if(ageGroups[index.row()]) return QVariant(ageGroups[index.row()]->getName());
-	else return QVariant();
-	} else return QVariant();
+	if(index.row() < 0 || index.row() > ageGroups.size())
+		return QVariant();
+
+	if(role != Qt::DisplayRole && role != Qt::EditRole)
+		return QVariant();
+
+	if(index.row() < ageGroups.size()) {
+		auto ageGroup = ageGroups.at(index.row());
+		if(!ageGroup)
+			return QVariant();
+		return ageGroup->getName();
+	}
+
+	return "<create new>";
 }
 Qt::ItemFlags AgeGroupStore::flags(const QModelIndex &index) const
 {
@@ -53,20 +61,19 @@ Qt::ItemFlags AgeGroupStore::flags(const QModelIndex &index) const
 }
 bool AgeGroupStore::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	// if(!index.isValid()) return false;
-	if(index.row() < ageGroups.size())
+	if(index.row() > ageGroups.size()) return false;
+
+	if(index.row() == ageGroups.size())
 	{
-		ageGroups[index.row()]->setName(value.toString());
-		emit dataChanged(index,index);
-		return true;
-	} else if(index.row() == ageGroups.size())
-	{
-		beginInsertRows(QModelIndex(), index.row(), index.row());
-		ageGroups.insert(index.row(), pAgeGroup(new AgeGroup(index.row(), value.toString())));
-		endInsertRows();
-		// emit dataChanged(index,index);
-		return true;
-	} else return false;
+			beginInsertRows(QModelIndex(), index.row(), index.row());
+			ageGroups.insert(index.row(), pAgeGroup(new AgeGroup(index.row(), value.toString())));
+			endInsertRows();
+			return true;
+	}
+
+	ageGroups[index.row()]->setName(value.toString());
+	emit dataChanged(index,index);
+	return true;
 }
 bool AgeGroupStore::insertRows(int row, int count, const QModelIndex &parent)
 {
@@ -76,7 +83,7 @@ bool AgeGroupStore::insertRows(int row, int count, const QModelIndex &parent)
 		beginInsertRows(parent,row,row+count);
 		for(int i = 0; i < count; ++i)
 		{
-			ageGroups.insert(row+i,pAgeGroup(new AgeGroup(row+i,"")));
+			ageGroups.insert(row+i,pAgeGroup(new AgeGroup(row+i,QString(row))));
 		}
 		endInsertRows();
 		return true;
@@ -92,4 +99,9 @@ bool AgeGroupStore::removeRows(int row, int count, const QModelIndex &parent)
 		endRemoveRows();
 		return true;
 	} else return false;
+}
+
+const pvAgeGroup& AgeGroupStore::getAgeGroups() const
+{
+	return ageGroups;
 }

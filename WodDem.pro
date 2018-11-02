@@ -26,7 +26,11 @@ SOURCES += main.cpp \
     base/Region.cpp \
     base/Religion.cpp \
     store/AgeGroupStore.cpp \
-    gui/MainWindow.cpp
+    gui/MainWindow.cpp \
+    store/JobStore.cpp \
+    store/GenderStore.cpp \
+    store/RaceStore.cpp \
+    store/ReligionStore.cpp
 
 HEADERS += \
     QPtr.hpp \
@@ -42,7 +46,11 @@ HEADERS += \
     base/Region.hpp \
     base/Religion.hpp \
     store/AgeGroupStore.hpp \
-    gui/MainWindow.hpp
+    gui/MainWindow.hpp \
+    store/JobStore.hpp \
+    store/GenderStore.hpp \
+    store/RaceStore.hpp \
+    store/ReligionStore.hpp
 
 DISTFILES += \
     LICENSE.md
